@@ -1,4 +1,4 @@
-import { remoteStore } from '../lib/remote-store.mjs';
+import { remoteStore, databaseFailure } from '../lib/remote-store.mjs';
 import { validate } from '../lib/survey-data.mjs';
 
 let store;
@@ -27,8 +27,10 @@ export default async function handler(req, res) {
     const saved = await store.save(body);
     if (saved.conflict) return json(409, { error: 'Este envío ya se guardó con otros datos. Recarga para iniciar otra respuesta.' });
     json(saved.repeated ? 200 : 201, { guardada: true, id: saved.id });
-  } catch {
-    if (!res.headersSent) json(503, { error: 'No pudimos confirmar el guardado. Reintenta el envío.' });
+  } catch (error) {
+    const code = databaseFailure(error);
+    console.error(`[EncuestaMongoDB] ${code}`);
+    if (!res.headersSent) json(503, { error: `No pudimos confirmar el guardado. Reintenta el envío. Código: ${code}`, codigo: code });
     else res.destroy();
   }
 }
