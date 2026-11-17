@@ -1,0 +1,24 @@
+/* Comparator-only mobile adjustment. Reference files remain untouched. */
+@media (max-width: 620px) {
+  :root { --header-height: 64px; }
+  .header {
+    grid-template: "brand nav language contact" 63px / minmax(0, 1fr) auto auto auto;
+    gap: 0 clamp(4px, 1.5vw, 9px);
+    padding-inline: 10px;
+    align-items: center;
+  }
+  .header .brand { grid-area: brand; min-width: 0; }
+  .header .brand img { width: min(100%, clamp(72px, 22vw, 112px)); max-height: 44px; }
+  .header .nav { grid-area: nav; margin-left: 0; align-self: center; gap: 0; }
+  .header .language { grid-area: language; gap: 4px; }
+  .header .contact { grid-area: contact; padding-inline: 7px; }
+  .header .nav > a, .header .solutions-toggle { font-size: 12px; white-space: nowrap; }
+  .header .solutions-menu {
+    position: fixed;
+    top: calc(var(--header-height) - 4px);
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+  }
+}

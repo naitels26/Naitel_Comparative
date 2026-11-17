@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NAITELS | Aviso de privacidad</title><link rel="stylesheet" href="assets/landing.css?v=19-1"></head>
+<body class="privacy-page">
+<nav aria-label="Idioma / Language"><a href="index.html">← NAITELS</a><button type="button" data-privacy-lang="es">Español</button><button type="button" data-privacy-lang="en">English</button></nav>
+<article class="privacy-content" id="notice"></article>
+<script src="assets/privacy.js"></script>
+<script>
+function showNotice(language){
+ document.documentElement.lang=language;
+ document.title='NAITELS | '+(language==='es' ? 'Aviso de privacidad' : 'Privacy notice');
+ renderPrivacyNotice(document.querySelector('#notice'),language);
+ document.querySelectorAll('[data-privacy-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.privacyLang===language)));
+}
+document.querySelectorAll('[data-privacy-lang]').forEach(button=>button.addEventListener('click',()=>showNotice(button.dataset.privacyLang)));
+showNotice(new URLSearchParams(location.search).get('lang')==='en' ? 'en' : 'es');
+</script></body></html>
+

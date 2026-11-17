@@ -1,0 +1,11 @@
+{
+  "name": "naitels-comparador",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "mongodb": "7.9.0"
+  }
+}

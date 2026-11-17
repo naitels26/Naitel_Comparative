@@ -1,0 +1,5 @@
+.env
+.env.*
+data
+exports
+node_modules

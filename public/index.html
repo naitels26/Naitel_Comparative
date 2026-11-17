@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b36">
+  <title>NAITELS · Comparte tu opinión</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="tabs" role="tablist" aria-label="Versiones del sitio">
+      <button type="button" id="tab-a" role="tab" aria-selected="true" aria-controls="panel-a">Versión A</button>
+      <button type="button" id="tab-b" role="tab" aria-selected="false" aria-controls="panel-b" tabindex="-1">Versión B</button>
+    </div>
+    <button id="opinion" type="button" aria-haspopup="dialog">Dar mi opinión</button>
+  </header>
+  <main class="viewer" aria-label="Explorar sitios NAITELS">
+    <section id="panel-a" role="tabpanel" aria-labelledby="tab-a">
+      <iframe src="/sitios/a/" title="Sitio NAITELS · Versión A" sandbox="allow-scripts allow-same-origin allow-forms" allow="autoplay; fullscreen"></iframe>
+    </section>
+    <section id="panel-b" role="tabpanel" aria-labelledby="tab-b" hidden>
+      <iframe src="/sitios/b/" title="Sitio NAITELS · Versión B" sandbox="allow-scripts allow-same-origin allow-forms" allow="autoplay; fullscreen"></iframe>
+    </section>
+  </main>
+  <dialog id="survey" aria-labelledby="survey-title" aria-describedby="survey-intro">
+    <div class="dialog-top"><span class="eyebrow">TU PERSPECTIVA CUENTA</span><button id="close" type="button" class="close" aria-label="Cerrar encuesta">×</button></div>
+    <div id="questions">
+      <h1 id="survey-title">¿Con cuál te quedas?</h1>
+      <p id="survey-intro">Después de explorar ambas versiones, comparte tu opinión. No pedimos nombre, correo ni teléfono.</p>
+      <p class="required-note">Los campos con * son obligatorios.</p>
+      <form id="survey-form">
+        <fieldset><legend>¿Cuál versión prefieres? <span aria-hidden="true">*</span></legend><div class="choices versions">
+          <label><input type="radio" name="preferencia" value="A" required><span>Versión A</span></label>
+          <label><input type="radio" name="preferencia" value="B" required><span>Versión B</span></label>
+        </div></fieldset>
+        <label class="field" for="motivo">¿Por qué? <span aria-hidden="true">*</span></label>
+        <textarea id="motivo" name="motivo" rows="3" maxlength="4000" required placeholder="Cuéntanos qué influyó en tu elección."></textarea>
+        <label class="field" for="mejoras">¿Qué mejorarías? <span class="optional">Opcional</span></label>
+        <textarea id="mejoras" name="mejoras" rows="2" maxlength="4000" placeholder="¿Qué cambiarías para que fuera más útil o fácil de usar?"></textarea>
+        <fieldset><legend>¿Desde qué dispositivo participas? <span aria-hidden="true">*</span></legend><div class="choices devices">
+          <label><input type="radio" name="dispositivo" value="Celular" required><span>Celular</span></label>
+          <label><input type="radio" name="dispositivo" value="Computadora" required><span>Computadora</span></label>
+          <label><input type="radio" name="dispositivo" value="Tableta" required><span>Tableta</span></label>
+        </div></fieldset>
+        <p class="privacy-note">Usaremos tus respuestas para evaluar las versiones de este sitio. Evita incluir datos personales en tus comentarios.</p>
+        <p id="form-status" role="status" aria-live="polite"></p>
+        <button id="submit" class="primary" type="submit">Enviar mi opinión <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+    <div id="success" hidden tabindex="-1" role="status">
+      <span class="success-mark" aria-hidden="true">✓</span>
+      <h2>Gracias por compartir tu opinión.</h2>
+      <p>Tu respuesta se guardó correctamente.</p>
+      <button id="continue" class="primary" type="button">Seguir explorando</button>
+    </div>
+  </dialog>
+</body>
+</html>
