@@ -1,14 +1,38 @@
+import { installCarousel } from './carousel.js';
+import { installLogoMarquee } from './logo-marquee.js';
+
+const carousels = new Map();
+const logoMarquees = new Map();
+const refreshCarousels = () => {
+  for (const carousel of carousels.values()) carousel.refresh();
+  for (const marquee of logoMarquees.values()) marquee.refresh();
+};
+document.addEventListener('visibilitychange', refreshCarousels);
+
 // Apply the requested mobile alignment equally to both embedded versions.
 // Keep all reference files intact and reapply after navigation inside a frame.
 for (const frame of document.querySelectorAll('.viewer iframe')) {
   const alignMobileNavigation = () => {
     const doc = frame.contentDocument;
-    if (!doc?.head || doc.querySelector('[data-comparator-navigation]')) return;
-    const style = doc.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = '/mobile-navigation.css';
-    style.dataset.comparatorNavigation = '';
-    doc.head.append(style);
+    if (!doc?.head) return;
+    if (!doc.querySelector('[data-comparator-navigation]')) {
+      const style = doc.createElement('link');
+      style.rel = 'stylesheet';
+      style.href = '/mobile-navigation.css';
+      style.dataset.comparatorNavigation = '';
+      doc.head.append(style);
+    }
+    carousels.get(frame)?.destroy();
+    carousels.set(frame, installCarousel(frame, {
+      version: frame.closest('[role="tabpanel"]').id === 'panel-b' ? 'b' : 'a',
+      isActive: () => !frame.closest('[role="tabpanel"]').hidden,
+      isPaused: () => Boolean(document.querySelector('#survey')?.open) || document.hidden
+    }));
+    logoMarquees.get(frame)?.destroy();
+    logoMarquees.set(frame, installLogoMarquee(frame, {
+      isActive: () => !frame.closest('[role="tabpanel"]').hidden,
+      isPaused: () => Boolean(document.querySelector('#survey')?.open) || document.hidden
+    }));
   };
   frame.addEventListener('load', alignMobileNavigation);
   if (frame.contentDocument?.readyState === 'complete') alignMobileNavigation();
@@ -22,6 +46,7 @@ function selectTab(tab) {
     document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
   }
   // Both iframes stay mounted: no src changes or document reloads.
+  refreshCarousels();
 }
 for (const [index, tab] of tabs.entries()) {
   tab.addEventListener('click', () => selectTab(tab));
@@ -46,10 +71,10 @@ function uuid() {
   return [...bytes].map((b,i) => ([4,6,8,10].includes(i) ? '-' : '') + b.toString(16).padStart(2,'0')).join('');
 }
 const requestId = uuid();
-document.getElementById('opinion').addEventListener('click', () => dialog.showModal());
+document.getElementById('opinion').addEventListener('click', () => { dialog.showModal(); refreshCarousels(); });
 document.getElementById('close').addEventListener('click', () => dialog.close());
 document.getElementById('continue').addEventListener('click', () => dialog.close());
-dialog.addEventListener('close', () => document.getElementById('opinion').focus());
+dialog.addEventListener('close', () => { document.getElementById('opinion').focus(); refreshCarousels(); });
 motivo.addEventListener('input', () => motivo.setCustomValidity(''));
 form.addEventListener('submit', async event => {
   event.preventDefault();

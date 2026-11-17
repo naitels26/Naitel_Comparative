@@ -22,3 +22,8 @@
     max-width: none;
   }
 }
+
+@media (max-width: 760px), (pointer: coarse) {
+  /* Reserve horizontal gestures for the carousel; retain vertical scroll/zoom. */
+  .hero[data-comparator-swipe] .slide { touch-action: pan-y pinch-zoom; }
+}
