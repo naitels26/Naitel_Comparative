@@ -25,35 +25,63 @@
     </section>
   </main>
   <dialog id="survey" aria-labelledby="survey-title" aria-describedby="survey-intro">
-    <div class="dialog-top"><span class="eyebrow">TU PERSPECTIVA CUENTA</span><button id="close" type="button" class="close" aria-label="Cerrar encuesta">×</button></div>
-    <div id="questions">
+    <div class="dialog-top">
+      <div class="survey-brand"><strong>NAITELS</strong><span>Evaluación del sitio</span></div>
+      <button id="close" type="button" class="close" aria-label="Cerrar encuesta">×</button>
+    </div>
+    <div id="questions" class="survey-content">
       <h1 id="survey-title">¿Con cuál te quedas?</h1>
-      <p id="survey-intro">Después de explorar ambas versiones, comparte tu opinión. No pedimos nombre, correo ni teléfono.</p>
-      <p class="required-note">Los campos con * son obligatorios.</p>
+      <p id="survey-intro">Ya viste las dos versiones. Cuéntanos cuál te resultó más útil y por qué.</p>
       <form id="survey-form">
-        <fieldset><legend>¿Cuál versión prefieres? <span aria-hidden="true">*</span></legend><div class="choices versions">
-          <label><input type="radio" name="preferencia" value="A" required><span>Versión A</span></label>
-          <label><input type="radio" name="preferencia" value="B" required><span>Versión B</span></label>
-        </div></fieldset>
-        <label class="field" for="motivo">¿Por qué? <span aria-hidden="true">*</span></label>
-        <textarea id="motivo" name="motivo" rows="3" maxlength="4000" required placeholder="Cuéntanos qué influyó en tu elección."></textarea>
-        <label class="field" for="mejoras">¿Qué mejorarías? <span class="optional">Opcional</span></label>
-        <textarea id="mejoras" name="mejoras" rows="2" maxlength="4000" placeholder="¿Qué cambiarías para que fuera más útil o fácil de usar?"></textarea>
-        <fieldset><legend>¿Desde qué dispositivo participas? <span aria-hidden="true">*</span></legend><div class="choices devices">
-          <label><input type="radio" name="dispositivo" value="Celular" required><span>Celular</span></label>
-          <label><input type="radio" name="dispositivo" value="Computadora" required><span>Computadora</span></label>
-          <label><input type="radio" name="dispositivo" value="Tableta" required><span>Tableta</span></label>
-        </div></fieldset>
-        <p class="privacy-note">Usaremos tus respuestas para evaluar las versiones de este sitio. Evita incluir datos personales en tus comentarios.</p>
+        <fieldset class="question preference"><legend><span class="question-number" aria-hidden="true">01</span>¿Cuál versión prefieres?</legend>
+          <div class="version-options">
+            <label><input type="radio" name="preferencia" value="A" required><span class="version-card"><b aria-hidden="true">A</b><span>Versión A</span><i aria-hidden="true"></i></span></label>
+            <label><input type="radio" name="preferencia" value="B" required><span class="version-card"><b aria-hidden="true">B</b><span>Versión B</span><i aria-hidden="true"></i></span></label>
+          </div>
+        </fieldset>
+        <div class="question reason">
+          <label class="field" for="motivo"><span class="question-number" aria-hidden="true">02</span>¿Por qué?</label>
+          <textarea id="motivo" name="motivo" rows="2" maxlength="4000" required placeholder="¿Qué hizo la diferencia para ti?"></textarea>
+        </div>
+        <fieldset class="question criterion"><legend><span class="question-number" aria-hidden="true">03</span>¿En cuál versión fue más fácil encontrar lo que buscabas?</legend>
+          <div class="scale" role="group" aria-label="Opciones de respuesta">
+            <label><input type="radio" name="facilidad" value="A" required><span>Versión A</span></label>
+            <label><input type="radio" name="facilidad" value="B" required><span>Versión B</span></label>
+            <label><input type="radio" name="facilidad" value="Igual" required aria-label="En ambas por igual"><span>Por igual</span></label>
+            <label><input type="radio" name="facilidad" value="Ninguna" required><span>En ninguna</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="question criterion"><legend><span class="question-number" aria-hidden="true">04</span>¿Cuál versión te dejó más claro qué ofrece NAITELS?</legend>
+          <div class="scale" role="group" aria-label="Opciones de respuesta">
+            <label><input type="radio" name="claridad" value="A" required><span>Versión A</span></label>
+            <label><input type="radio" name="claridad" value="B" required><span>Versión B</span></label>
+            <label><input type="radio" name="claridad" value="Igual" required aria-label="En ambas por igual"><span>Por igual</span></label>
+            <label><input type="radio" name="claridad" value="Ninguna" required><span>En ninguna</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="question device-question"><legend><span class="question-number" aria-hidden="true">05</span>¿Desde qué dispositivo participas?</legend>
+          <div class="device-options">
+            <label><input type="radio" name="dispositivo" value="Celular" required><span>Celular</span></label>
+            <label><input type="radio" name="dispositivo" value="Computadora" required><span>Computadora</span></label>
+            <label><input type="radio" name="dispositivo" value="Tableta" required><span>Tableta</span></label>
+          </div>
+        </fieldset>
+        <details class="optional-feedback">
+          <summary><span>¿Qué mejorarías? <small>Opcional</small></span><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <textarea id="mejoras" name="mejoras" aria-label="¿Qué mejorarías? (opcional)" rows="2" maxlength="4000" placeholder="Si cambiaras algo, ¿qué sería?"></textarea>
+        </details>
         <p id="form-status" role="status" aria-live="polite"></p>
-        <button id="submit" class="primary" type="submit">Enviar mi opinión <span aria-hidden="true">→</span></button>
+        <div class="survey-actions">
+          <p class="privacy-note">No pedimos datos personales.<br>Evita incluirlos en tus comentarios.</p>
+          <button id="submit" class="primary" type="submit">Enviar opinión</button>
+        </div>
       </form>
     </div>
-    <div id="success" hidden tabindex="-1" role="status">
+    <div id="success" class="survey-content" hidden tabindex="-1" role="status">
       <span class="success-mark" aria-hidden="true">✓</span>
-      <h2>Gracias por compartir tu opinión.</h2>
-      <p>Tu respuesta se guardó correctamente.</p>
-      <button id="continue" class="primary" type="button">Seguir explorando</button>
+      <h2>Gracias por tu tiempo.</h2>
+      <p>Tu opinión se guardó correctamente.</p>
+      <button id="continue" class="primary" type="button">Volver a las versiones</button>
     </div>
   </dialog>
 </body>

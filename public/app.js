@@ -86,6 +86,6 @@ form.addEventListener('submit', async event => {
   } finally {
     pending = false;
     submit.disabled = false;
-    submit.textContent = attemptedPayload && !saved ? 'Reintentar envío' : 'Enviar mi opinión →';
+    submit.textContent = attemptedPayload && !saved ? 'Reintentar envío' : 'Enviar opinión';
   }
 });
